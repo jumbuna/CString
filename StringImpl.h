@@ -38,15 +38,15 @@ void append(struct String *str, char *other) {
 	/*if addition size will cause an overflow then create space to accomodate*/
 	if(str->len+str->offSet+ oLen >= str->capacity) {
 		/*shift array to the left if unused space is available*/
-		if(str->offSet > str->capacity * 0.75 && str->len+oLen < str->capacity) {
+		if(str->offSet > (str->capacity * 0.75) && str->len+oLen < str->capacity) {
 			memcpy(str->ptr-str->offSet, str->ptr, str->len+1);
 			str->ptr -= str->offSet;
 			str->offSet = 0;
 		} else {
 			/*extend array to exactly fit/bigger size*/
 			str->capacity += oLen;
-			char *temp = realloc(str->ptr-str->offSet, str->capacity);
-			memcpy(temp, str->ptr, str->len);
+			str->ptr = realloc(str->ptr-str->offSet, str->capacity);
+			memcpy(str->ptr, str->ptr+str->offSet, str->len);
 			str->ptr = temp;
 			str->offSet = 0;
 		}
