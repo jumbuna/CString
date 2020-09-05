@@ -45,9 +45,8 @@ void append(struct String *str, char *other) {
 		} else {
 			/*extend array to exactly fit/bigger size*/
 			str->capacity += oLen;
-			char *temp = malloc(str->capacity);
+			char *temp = realloc(str->ptr-str->offSet, str->capacity);
 			memcpy(temp, str->ptr, str->len);
-			free(str->ptr);
 			str->ptr = temp;
 			str->offSet = 0;
 		}
